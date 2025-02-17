@@ -10,6 +10,15 @@ Accept: application/json
 GET http://localhost:8080/api/v1/team/Engineering
 Accept: application/json
 
+### Create a new team
+POST http://localhost:8080/api/v1/team/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "team_test_5"
+}
+
 #####################################################################################
 ### User API
 #####################################################################################
@@ -26,8 +35,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "email": "new.user@example.com",
-  "teamNames": ["Engineering"]
+  "email": "test.user5@example.com",
+  "teamNames": ["team_test_5"]
 }
 
 ### Update existing user

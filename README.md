@@ -4,14 +4,16 @@
 
 This project is a **Spring Boot** application that provides APIs for managing users, teams, and documents. It integrates with **PostgreSQL** for data storage and includes an external **Gemini AI** model service.
 
-## 🏗️ Technology Stack
+## 🏷️ Technology Stack
 
 - **Java 17**
 - **Spring Boot** (Spring MVC, JPA)
+- **Flyway** (Database Migration)
 - **PostgreSQL** (Relational Database)
 - **JUnit** (Testing Framework)
 - **Docker** (Containerization)
 - **Docker Compose** (Multi-container deployment)
+- **Maven** (Build Tool)
 
 ---
 
@@ -58,6 +60,9 @@ This stops and removes all running containers.
 
 ## 📂 Database Schema
 
+
+
+
 The PostgreSQL database consists of the following tables:
 
 ### **vt\_team** (Teams Table)
@@ -96,7 +101,15 @@ The PostgreSQL database consists of the following tables:
 | modification\_date | TIMESTAMP    | DEFAULT CURRENT\_TIMESTAMP            |
 
 ---
+## Flyway Database Migration
 
+The following DDL files are executed by Flyway when docker-compose deploys the project:
+
+- V1__Create_Tables.sql
+
+- V2__Populate_Test_Data.sql
+
+---
 ## 📊 Sample Data Inserted
 
 | Team Name   |
@@ -120,7 +133,7 @@ The PostgreSQL database consists of the following tables:
 
 ---
 
-## 📡 API Endpoints
+## 👀 API Endpoints
 
 ### **DocumentController**
 
@@ -185,6 +198,66 @@ The PostgreSQL database consists of the following tables:
 
 ---
 
+## 📝 Test Case Scenarios
+
+### **1. Create a new team
+```http
+POST http://localhost:8080/api/v1/team/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "team_test_5"
+}
+```
+
+### **2. Create a new user and assign to team_test_5
+```http
+POST http://localhost:8080/api/v1/user/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "test.user5@example.com",
+  "teamNames": ["team_test_5"]
+}
+```
+
+### **3. Get Users who are registered but have not added a document using startDate and EndDate request parameters (Epoch millisecond)
+```http
+GET http://localhost:8080/api/v1/user/?startDate=1700000000000&endDate=1705000000000
+Accept: application/json
+```
+
+### **4. Upload a document and link to user we created
+```http
+POST http://localhost:8080/api/v1/document/
+Accept: application/json
+Content-Type: multipart/form-data
+
+-- Form Data:
+file=@requests/visible_thread_spec.txt
+email=test.user5@example.com
+```
+
+### **5. Get Word Count of each individual word for the document uploaded
+```http
+GET http://localhost:8080/api/v1/document/word/count?fileName=visible_thread_spec.txt
+Accept: application/json
+```
+
+### **6. Query Gemini AI query to find synomyms for largest word within file added to this form
+```http
+GET http://localhost:8080/api/v1/gemini/
+Accept: application/json
+Content-Type: multipart/form-data
+
+-- Form Data:
+file=@./visible_thread_spec.txt
+```
+
+---
+
 ## 🔍 Testing
 
 Run tests using:
@@ -194,5 +267,4 @@ Run tests using:
 ```
 
 This executes unit tests (JUnit) to verify API behavior.
-
 
