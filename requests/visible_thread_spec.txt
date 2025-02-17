@@ -1,0 +1,37 @@
+Document Tracking
+
+Task 1: Skeleton Spring APP (Document Analyzer)
+System Description
+Consider a Spring (or Spring Boot) app that supports the following.
+Users can upload text documents to the system (text files)
+• A user is identified by an email address, and we also track the date the user was first added
+to the system.
+• A user can belong in multiple teams
+• A team consists of a team name
+• A user must belong to 1 team
+• Users can move between teams.
+• When a document is uploaded the system should store the document name and word count
+and the date/time the document was uploaded.
+• The system should use a relational database to store data
+What we want you to do
+1) Build controllers/services that provide the following functionality (no UI required):
+• A service that returns the number of users where were registered and who did not upload a
+document within a given time period, i.e. from x to y. For example, if the time period is June
+1 – July 1, the users who were registered before July 1 and who did not upload a document
+between June 1 and July 1.
+• A service that returns the word frequency for a particular text document, for example list
+the top 10 words occurring the document by frequency. The result might look like:
+Contract : 15
+Letter: 11
+Offer: 9
+Etc.
+Exclude the following words: “The, Me, You, I, Of, And, A, We”
+You can assume services already exist to upload and store documents, and another to retrieve the
+text content of a document.
+2) Provide whatever SQL is needed to setup the database structure for this app (you can assume
+whatever RDBMS you like
+3) Using the Spring AI project, build an endpoint that uses Google Gemini Gen AI service to suggest
+synonyms for the longest word in a given document.
+
+You can get a free api key for Google Gemini from Google, and there are several guides online
+related to using Spring AI to send a prompt to Gemini.

@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=visiblethread-postgres
+      - POSTGRES_PASSWORD=visiblethread-postgres
+    networks:
+      - postgres-visiblethread-test-service-network
+    volumes:
+      - postgres-visiblethread-test-service-data:/var/lib/postgresql/data
+    restart: always
+
+  app:
+    image: 'visiblethread/visiblethread-demo:latest'
+    container_name: app
+    ports:
+      - "8080:8080"  # Application port
+      - "5005:5005"  # Debugging port
+    depends_on:
+      - db
+    networks:
+      - postgres-visiblethread-test-service-network
+    restart: always
+
+networks:
+  postgres-visiblethread-test-service-network:
+    driver: bridge
+
+volumes:
+  postgres-visiblethread-test-service-data:
+    driver: local

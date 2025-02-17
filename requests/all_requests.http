@@ -1,0 +1,79 @@
+#####################################################################################
+### Team API
+#####################################################################################
+
+### Get Teams
+GET http://localhost:8080/api/v1/team/
+Accept: application/json
+
+### Get team by name
+GET http://localhost:8080/api/v1/team/Engineering
+Accept: application/json
+
+#####################################################################################
+### User API
+#####################################################################################
+
+
+### Get Users using startDate and EndDate request parameters
+GET http://localhost:8080/api/v1/user/?startDate=1700000000000&endDate=1705000000000
+Accept: application/json
+
+
+### Add new User
+POST http://localhost:8080/api/v1/user/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "new.user@example.com",
+  "teamNames": ["Engineering"]
+}
+
+### Update existing user
+PUT http://localhost:8080/api/v1/user/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "teamNames": ["Marketing"]
+}
+
+### Delete User
+DELETE http://localhost:8080/api/v1/user/?email=jane.smith@example.com
+Accept: application/json
+
+
+#############################################################################
+### Document API
+#############################################################################
+
+### Get Document
+GET http://localhost:8080/api/v1/document/
+Accept: application/json
+
+### Post Document File
+POST http://localhost:8080/api/v1/document/
+Accept: application/json
+Content-Type: multipart/form-data
+
+-- Form Data:
+file=@visible_thread_spec.txt
+email=john.doe@example.com
+
+### Get Word count of uploaded document
+GET http://localhost:8080/api/v1/document/word/count?fileName=project_plan.txt
+Accept: application/json
+
+#####################################################################################
+### Gemini API
+#####################################################################################
+
+### Prompt Gemini to return synomyms for largest word in added txt file
+GET http://localhost:8080/api/v1/gemini/
+Accept: application/json
+Content-Type: multipart/form-data
+
+-- Form Data:
+file=@./visible_thread_spec.txt
