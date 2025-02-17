@@ -1,5 +1,6 @@
 package com.example.visiblethreaddemo.connector;
 
+import com.example.visiblethreaddemo.connector.config.GeminiConfig;
 import com.example.visiblethreaddemo.exception.GeminiConnectorException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,15 +20,11 @@ import java.util.Map;
 @Component("geminiHttpService")
 public class GeminiHttpConnectorImpl implements GeminiConnector {
 
-    @Value("${spring.google.gemini.api.key}")
-    private String apiKey;
-
-    @Value("${spring.google.gemini.api.url}")
-    private String apiUrl;
+    @Autowired
+    private GeminiConfig geminiConfig;
 
     @Autowired
     private RestTemplate restTemplate;
-
 
     @Autowired
     private ObjectMapper mapper;
@@ -36,7 +33,7 @@ public class GeminiHttpConnectorImpl implements GeminiConnector {
     @Override
     public String queryChat(String prompt) {
 
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-002:generateContent?key=AIzaSyAPqgXAZhEQdEA89AxJLuhVnU6gtW8C2Nc";
+        String url = geminiConfig.getUrl() + geminiConfig.getKey();
 
         Map<String, Object> requestBody = Map.of(
                 "contents", Collections.singletonList(
