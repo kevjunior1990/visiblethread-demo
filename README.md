@@ -240,6 +240,11 @@ file=@requests/visible_thread_spec.txt
 email=test.user5@example.com
 ```
 
+Please note I had difficulty adding the file to my Document post request above so I used Postman in order to test the 
+endpoint above.
+
+![postman_document_post_request.png](requests/postman_document_post_request.png)
+
 ### **5. Get Word Count of each individual word for the document uploaded
 ```http
 GET http://localhost:8080/api/v1/document/word/count?fileName=visible_thread_spec.txt
@@ -255,7 +260,10 @@ Content-Type: multipart/form-data
 -- Form Data:
 file=@./visible_thread_spec.txt
 ```
+Please note I had difficulty adding the file to my Gemini get request above so I used Postman in order to test the
+endpoint above.
 
+![postman_gemini_get_request.png](requests/postman_gemini_get_request.png)
 ---
 
 ## 🔍 Testing
